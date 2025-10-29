@@ -1,6 +1,7 @@
+// src/__tests__/App.test.js
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import App from "../App"; // adjust path if needed
+import App from "../App";
 
 // Initial state tests
 test("pizza checkbox is initially unchecked", () => {
@@ -17,34 +18,34 @@ test("toppings list initially contains only cheese", () => {
 });
 
 // Checkbox click tests
-test("checkbox appears as checked when user clicks it", () => {
+test("checkbox appears as checked when user clicks it", async () => {
   render(<App />);
   const addPepperoni = screen.getByRole("checkbox", { name: /add pepperoni/i });
-  userEvent.click(addPepperoni);
+  await userEvent.click(addPepperoni);
   expect(addPepperoni).toBeChecked();
 });
 
-test("topping appears in toppings list when checked", () => {
+test("topping appears in toppings list when checked", async () => {
   render(<App />);
   const addPepperoni = screen.getByRole("checkbox", { name: /add pepperoni/i });
-  userEvent.click(addPepperoni);
+  await userEvent.click(addPepperoni);
   expect(screen.getAllByRole("listitem").length).toBe(2);
   expect(screen.getByText("Cheese")).toBeInTheDocument();
   expect(screen.getByText("Pepperoni")).toBeInTheDocument();
 });
 
-test("selected topping disappears when checked a second time", () => {
+test("selected topping disappears when checked a second time", async () => {
   render(<App />);
   const addPepperoni = screen.getByRole("checkbox", { name: /add pepperoni/i });
 
   // First click → add pepperoni
-  userEvent.click(addPepperoni);
+  await userEvent.click(addPepperoni);
   expect(addPepperoni).toBeChecked();
   expect(screen.getByText("Cheese")).toBeInTheDocument();
   expect(screen.getByText("Pepperoni")).toBeInTheDocument();
 
   // Second click → remove pepperoni
-  userEvent.click(addPepperoni);
+  await userEvent.click(addPepperoni);
   expect(addPepperoni).not.toBeChecked();
   expect(screen.getByText("Cheese")).toBeInTheDocument();
   expect(screen.queryByText("Pepperoni")).not.toBeInTheDocument();
