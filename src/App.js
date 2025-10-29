@@ -1,5 +1,4 @@
-// src/App.js
-import React, { useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [pepperoniIsChecked, setPepperoniIsChecked] = useState(false);
@@ -11,7 +10,6 @@ function App() {
   return (
     <div>
       <h1>Select Pizza Toppings</h1>
-
       <input
         type="checkbox"
         id="pepperoni"
